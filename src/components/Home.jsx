@@ -10,7 +10,6 @@ const Home = () => {
 
     const handleImageUpload = async (file) => {
         setImage(URL.createObjectURL(file));
-        setEnhancedImage(null);
         setLoading(true);
 
         try {
@@ -20,10 +19,10 @@ const Home = () => {
         } catch (error) {
             console.error("Error uploading image:", error);
             alert("Failed to upload image. Please try again.");
+            setLoading(false);
         }
     };
-
-
+    
     return (
         <>
             <ImageUpload handleImageUpload={handleImageUpload}></ImageUpload>

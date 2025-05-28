@@ -12,7 +12,7 @@ const ImagePreview = (props) => {
           Original Image
         </h2>
 
-        {props.loading ? (
+        {props.uploadedImage ? (
           <img
             src={props.uploadedImage}
             alt=""
@@ -27,24 +27,21 @@ const ImagePreview = (props) => {
       <div className='bg-white shadow-lg rounded-xl overflow-hidden'>
         <h2 className='text-xl font-semibold text-center bg-blue-800 text-white py-2'>Enhanced Image</h2>
 
-        {props.enhanced && !props.loading && (
+        {props.loading ? (
+          <Loading></Loading>
+        ) : props.enhancedImage ? (
           <img
             src={props.enhancedImage}
             alt=""
             className='w-full h-full object-cover'
           />
-        )}
-
-        {props.loading ? (
-          <Loading></Loading>
         ) : (
           <div className='flex items-center justify-center h-80 text-gray-700'>Image yet to be Uploaded.</div>
         )}
-
       </div>
 
     </div>
   )
 }
 
-export default ImagePreview
+export default ImagePreview;

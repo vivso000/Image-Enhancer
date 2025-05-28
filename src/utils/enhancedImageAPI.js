@@ -1,8 +1,9 @@
 import axios from 'axios';
-// const API_KEY = import.meta.env.API_KEY;
-const API_KEY = "wxnsawy85jay2o21c"; 
+const API_KEY = import.meta.env.VITE_API_KEY;
+console.log(API_KEY);
+// const API_KEY = "wxnsawy85jay2o21c"; 
 const BASE_URL = "https://techhk.aoscdn.com";
-const MAXIMUM_RETRIES = 10; // Maximum number of retries for polling
+const MAXIMUM_RETRIES = 20; // Maximum number of retries for polling
 
 export const enhancedImageAPI = async (file) => {
 
@@ -42,26 +43,8 @@ const uploadImage = async (file) => {
     }
     console.log(data.data.task_id)
     return data.data.task_id;
+    // return 'fa100b99-0f91-4c38-a3c8-671d05990e3b'
 };
-
-const fetchEnhancedImage = async (taskId) => {
-    // function to fetch the enhanced image from the server
-    const {data} = await axios.get(
-        `${BASE_URL}/api/tasks/visual/scale/${taskId}`,
-        {
-            headers: {
-                "X-API-KEY": API_KEY
-            }
-        }
-    );
-
-    if(!data?.data){
-        throw new Error("Image data not found in response");
-    }
-
-    return data.data;
-};
-
 
 const PollforEnhancedImage = async (taskId, retries=0) => {
     const result = await fetchEnhancedImage(taskId);
@@ -80,4 +63,22 @@ const PollforEnhancedImage = async (taskId, retries=0) => {
     console.log("Enhanced image is ready. URL:", result);
 
     return result;
+};
+
+const fetchEnhancedImage = async (taskId) => {
+    // function to fetch the enhanced image from the server
+    const {data} = await axios.get(
+        `${BASE_URL}/api/tasks/visual/scale/${taskId}`,
+        {
+            headers: {
+                "X-API-KEY": API_KEY
+            }
+        }
+    );
+
+    if(!data?.data){
+        throw new Error("Image data not found in response");
+    }
+
+    return data.data;
 };
